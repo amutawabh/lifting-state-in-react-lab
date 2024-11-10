@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import BurgerStack from './components/BurgerStack';
+import IngredientList from './components/IngredientList';
+import './App.css';
 
 export const availableIngredients = [
   { name: 'Kaiser Bun', color: 'saddlebrown' },
@@ -21,11 +21,23 @@ export const availableIngredients = [
 ];
 
 const App = () => {
+  const [stack, setStack] = useState([])
+
+  const addToBurger = (burger) => {
+    setStack([...stack, burger])
+  }
+
+  const removeFromBurger = (burgerIdx) => {
+    const updatedStack = stack.filter((ingredient, index) => index !== burgerIdx)
+    setStack(updatedStack)
+  }
+
   return (
     <main>
       <h1>Burger Stacker</h1>
       <section>
-      {/* List & Stack components */}
+        <IngredientList ingredients={availableIngredients} addToBurger={addToBurger} />
+        <BurgerStack stack={stack} removeFromBurger={removeFromBurger}/>
       </section>
     </main>
   );
